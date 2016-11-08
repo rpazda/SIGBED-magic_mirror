@@ -1,0 +1,10 @@
+
+	body{
+		color: white !important;
+		background-color: black !important;
+	}
+	#bottom-row{
+		position: absolute;
+		bottom: 0px;
+		width: 100%;
+	}

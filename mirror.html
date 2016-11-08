@@ -1,0 +1,89 @@
+<DOCTYPE! html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+	<head>
+		<meta name="author" content="Richard Pazda, SIGBED 2016" />
+		
+		<title>
+			Mirror UI
+		</title>
+		
+		<!--Main style sheet-->
+		<link rel="stylesheet" type="text/css" href="content/style.css">
+		
+		<!-- jQuery -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		
+		<!--BootStrap CDN
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"></link>-->
+		
+		<!--BootStrap-->
+		<link rel="stylesheet" href="content/bootstrap/css/bootstrap.min.css">
+		
+		<!--FontAwesome-->
+		<link rel="stylesheet" href="content/font-awesome/css/font-awesome.min.css">
+		
+		<!--weather-icons-->
+		<link rel="stylesheet" href="content/weather-icons/css/weather-icons.min.css">
+		
+		<!--Javascript functions-->
+		<script type="text/javascript" src="mirror.js"></script>
+		
+		<style>
+		
+			
+		
+		</style>
+		
+		
+
+	</head>
+
+	<body onload="">
+		
+		<div class="container-fluid">
+		
+			<div class="row">
+			
+				<div class="col-sm-3" >
+					<h1>Temperature:</h1>
+					<h3><span id="temp-real"></span></h3>
+					<h2>Feels Like:</h2>
+					<h3><span id="temp-feel"></span></h3>
+					
+				</div>
+				
+				<div class="col-sm-6">
+				
+					<center>
+						
+						<h2><span id="date"></span></h2>
+						
+					</center>
+				
+				</div>
+				
+				<div class="col-sm-3" onload="" >
+				
+					<h1 style="text-align: right;">Time</h1>
+					
+					<h2 style="text-align: right" id="clock"></h2>
+						
+				</div>
+			
+			</div>
+			
+			<div class="row" id ="bottom-row">
+				
+				<center>
+					<h1>Weather <span id="weather-icon"></span></h1>
+				</center>
+				
+			</div>
+			
+		</div>
+		
+	</body>
+	
+</html>
