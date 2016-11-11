@@ -16,13 +16,17 @@
 			icon
 				--figure out why not displaying correctly
 				match icons WU->WI
-		Add sunrise, sunset
-			data
-			div
+		--Add sunrise, sunset
+			--data
+			--div
 		Add 5 day forecast
 		Add news
 		Add google calendar days events
 		Setup local config 
+			lat
+			lon
+			api key
+			time zone
 		
 		
 		Weather icons library: https://erikflowers.github.io/weather-icons/
@@ -33,12 +37,27 @@
 	//Basis for clock function taken from:
 	//http://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_clock
 	
+	/*var config = (function(){
+		var configuration;
+		$.ajax({
+			'async': false,
+			'global': false,
+			'url': "config.json",
+			'datatype': "json",
+			'success': function(data){
+				configuration = data;
+			}
+		});
+		return JSON.parse(configuration);
+	})();*/
+	
 	//Start all mirror functions once page is ready
 	$(document).ready( function(){
-			
+		
 		startTime(); 
 		updateWeather(); 
 		setDate();
+		setSunriseSunset();
 		
 	});
 	
@@ -59,11 +78,12 @@
 		hour + ":" + minutes + " " + AMPM;// + ":" + seconds; removed seconds
 		var t = setTimeout(startTime, 500);	//restart function every 500 ms
 		
-		//Helper function for timer, adds zeros for familiar formatting
-		function formatTime(i) {
-			if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-			return i;
-		}
+	}
+	
+	//Helper function for timer, adds zeros for familiar formatting
+	function formatTime(i) {
+		if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+		return i;
 	}
 	
 			
@@ -101,7 +121,8 @@
 				return parsedWeatherData;//Doesnt seem to be returning data correctly
 			});
 			*/
-			var connectionString = "http://api.wunderground.com/api/8f4f737948165dbd/conditions/q/FL/Oviedo.json"
+			var connectionString = "http://api.wunderground.com/api/8f4f737948165dbd/conditions/q/FL/Oviedo.json";
+			//var connectionString = "http://api.wunderground.com/api/"+config.apiKey+"/conditions/q/"+config.lat+","+config.lon+".json";
 			//var weatherData = httpGet(connectionString);
 				
 			var Httpreq = new XMLHttpRequest();
@@ -189,10 +210,6 @@
 		}
 	}
 	
-	
-	
-
-	
 	//Displays the date in a familiar, legible format.
 	function setDate(){
 						
@@ -208,3 +225,44 @@
 		$('#date').html(dateString);
 		var t = setTimeout(setDate, 1000);	//Restart function every 1000 ms (1 second)
 	}
+	
+	function setSunriseSunset(){
+		sunriseSunsetData = JSON.parse(getSunriseSunset());
+		var sunrise = convertUTCtoLocal("01/01/1999 "+sunriseSunsetData.results.sunrise+" UTC");
+		var sunset = convertUTCtoLocal("01/01/1999 "+sunriseSunsetData.results.sunset+" UTC");
+		
+		$("#sunrise").html(sunrise);
+		$("#sunset").html(sunset);
+		
+		var t = setTimeout(startTime, 500000);	//restart function 
+		
+		function getSunriseSunset(){
+			var connectionString = "http://api.sunrise-sunset.org/json?lat=28.613474&lng=-81.200157";
+			
+			var Httpreq = new XMLHttpRequest();
+			Httpreq.open("GET", connectionString, false);
+			Httpreq.send(null);
+			
+			return Httpreq.responseText;
+		}
+	}
+	
+	
+	function convertUTCtoLocal(time){	//Big ups to digitalbath! http://stackoverflow.com/questions/6525538/convert-utc-date-time-to-local-date-time-using-javascript
+		var localTimeFull = new Date(time);
+		var hour = localTimeFull.getHours();
+		var AMPM = "AM";
+		if(hour > 11){
+			AMPM = "PM";
+		}
+		hour = hour%12;
+		var minutes = localTimeFull.getMinutes();
+		minutes = formatTime(minutes);
+		
+		var localTime = hour + ":" + minutes + " " + AMPM;
+		
+		return localTime;  
+	}
+	
+	
+	
