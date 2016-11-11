@@ -58,12 +58,14 @@
 		document.getElementById('clock').innerHTML =
 		hour + ":" + minutes + " " + AMPM;// + ":" + seconds; removed seconds
 		var t = setTimeout(startTime, 500);	//restart function every 500 ms
+		
+		//Helper function for timer, adds zeros for familiar formatting
+		function formatTime(i) {
+			if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+			return i;
+		}
 	}
-	//Helper function for timer, adds zeros for familiar formatting
-	function formatTime(i) {
-		if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-		return i;
-	}
+	
 			
 	// Gets weather data, parses it, and updates elements with weather data
 	function updateWeather() {
@@ -85,107 +87,111 @@
 		//update UV 			$("#UV").html(UV);
 		//update chance of rain $("#chance-of-rain").html();
 		var tt = setTimeout(updateWeather, 1200000);
-	}
-	
-	//Helper function for updateWeather(), Gets weather data via json request and returns it as a JSON string
-	function getWeatherData(){
-	
-		/*$.ajax({
-			url: "http://api.wunderground.com/api/ /conditions/q/FL/Oviedo.json",
-			context: document.body
-		})
-		.success(function(data){
-			var weatherData = data;
-			var parsedWeatherData =  JSON.parse(weatherData);
-			return parsedWeatherData;//Doesnt seem to be returning data correctly
-		});
-		*/
-		var connectionString = "http://api.wunderground.com/api/8f4f737948165dbd/conditions/q/FL/Oviedo.json"
-		//var weatherData = httpGet(connectionString);
+		
+		//Helper function for updateWeather(), Gets weather data via json request and returns it as a JSON string
+		function getWeatherData(){
+		
+			/*$.ajax({
+				url: "http://api.wunderground.com/api/ /conditions/q/FL/Oviedo.json",
+				context: document.body
+			})
+			.success(function(data){
+				var weatherData = data;
+				var parsedWeatherData =  JSON.parse(weatherData);
+				return parsedWeatherData;//Doesnt seem to be returning data correctly
+			});
+			*/
+			var connectionString = "http://api.wunderground.com/api/8f4f737948165dbd/conditions/q/FL/Oviedo.json"
+			//var weatherData = httpGet(connectionString);
+				
+			var Httpreq = new XMLHttpRequest();
+			Httpreq.open("GET", connectionString, false);
+			Httpreq.send(null);
 			
-		var Httpreq = new XMLHttpRequest();
-		Httpreq.open("GET", connectionString, false);
-		Httpreq.send(null);
+			return Httpreq.responseText;
+			
+		}
 		
-		return Httpreq.responseText;
-		
+		// Maps icon information from the WU API to icons from weather-icons
+		function getIcon(iconName){
+			
+			var iconHtml = "";
+			//update switch
+			/*
+			switch(iconName){
+				//case n:
+				//	code block
+				//	break;
+				//figure out formatting of strings
+				
+				case "chanceofflurries":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "chanceofrain":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "chanceofsleet":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "chanceofsnow":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "chanceofathunderstorm":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "clear":
+					iconHtml = "<i class='wi wi-day-sunny'></i>";
+					break;
+				case "cloudy":
+					iconHtml = "<i class='wi wi-day-cloudy'></i>";
+					break;
+				case "flurries":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "hazy":
+					iconHtml = "<i class='wi wi-day-haze'></i>";
+					break;
+				case "mostlycloudy":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "mostlysunny":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "partlycloudy":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "partlysunny":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "rain":
+					iconHtml = "<i class='wi wi-day-rain'></i>";
+					break;
+				case "sleet":
+					iconHtml = "<i class='wi wi-day-sleet'></i>";
+					break;
+				case "snow":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "sunny":
+					iconHtml = "<i class=''></i>";
+					break;
+				case "thunderstorm":
+					iconHtml = "<i class='wi wi-day-thunderstorm'></i>";
+					break;
+				case "unknown":
+					iconHtml = "<i class='fa fa-question'></i>";
+					break;
+				default:
+					default code block
+			}*/
+			
+			return iconHtml;
+		}
 	}
 	
-	// Maps icon information from the WU API to icons from weather-icons
-	function getIcon(iconName){
-		
-		var iconHtml = "";
-		//update switch
-		/*
-		switch(iconName){
-			//case n:
-			//	code block
-			//	break;
-			//figure out formatting of strings
-			
-			case "chanceofflurries":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "chanceofrain":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "chanceofsleet":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "chanceofsnow":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "chanceofathunderstorm":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "clear":
-				iconHtml = "<i class='wi wi-day-sunny'></i>";
-				break;
-			case "cloudy":
-				iconHtml = "<i class='wi wi-day-cloudy'></i>";
-				break;
-			case "flurries":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "hazy":
-				iconHtml = "<i class='wi wi-day-haze'></i>";
-				break;
-			case "mostlycloudy":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "mostlysunny":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "partlycloudy":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "partlysunny":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "rain":
-				iconHtml = "<i class='wi wi-day-rain'></i>";
-				break;
-			case "sleet":
-				iconHtml = "<i class='wi wi-day-sleet'></i>";
-				break;
-			case "snow":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "sunny":
-				iconHtml = "<i class=''></i>";
-				break;
-			case "thunderstorm":
-				iconHtml = "<i class='wi wi-day-thunderstorm'></i>";
-				break;
-			case "unknown":
-				iconHtml = "<i class='fa fa-question'></i>";
-				break;
-			default:
-				default code block
-		}*/
-		
-		return iconHtml;
-	}
+	
+	
+
 	
 	//Displays the date in a familiar, legible format.
 	function setDate(){
