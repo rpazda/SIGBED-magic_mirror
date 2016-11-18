@@ -13,9 +13,9 @@
 			chance of rain
 				data
 				div
-			icon
+			--icon
 				--figure out why not displaying correctly
-				match icons WU->WI
+				--match icons WU->WI
 		--Add sunrise, sunset
 			--data
 			--div
@@ -106,7 +106,7 @@
 		//update humidity 		$("#humidity").html(humidity);
 		//update UV 			$("#UV").html(UV);
 		//update chance of rain $("#chance-of-rain").html();
-		var tt = setTimeout(updateWeather, 1200000);
+		var tt = setTimeout(updateWeather, 360000);	//fetch weather every 6 min
 		
 		//Helper function for updateWeather(), Gets weather data via json request and returns it as a JSON string
 		function getWeatherData(){
@@ -137,52 +137,47 @@
 		function getIcon(iconName){
 			
 			var iconHtml = "";
-			//update switch
-			/*
+			
 			switch(iconName){
-				//case n:
-				//	code block
-				//	break;
-				//figure out formatting of strings
 				
 				case "chanceofflurries":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-snow'></i>";
 					break;
 				case "chanceofrain":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-rain'></i>";
 					break;
 				case "chanceofsleet":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-sleet'></i>";
 					break;
 				case "chanceofsnow":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-snow'></i>";
 					break;
 				case "chanceofathunderstorm":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-thunderstorm'></i>";
 					break;
 				case "clear":
 					iconHtml = "<i class='wi wi-day-sunny'></i>";
 					break;
 				case "cloudy":
-					iconHtml = "<i class='wi wi-day-cloudy'></i>";
+					iconHtml = "<i class='wi wi-cloudy'></i>";
 					break;
 				case "flurries":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-snow'></i>";
 					break;
 				case "hazy":
 					iconHtml = "<i class='wi wi-day-haze'></i>";
 					break;
 				case "mostlycloudy":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-cloud'></i>";
 					break;
 				case "mostlysunny":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-day-sunny'></i>";
 					break;
 				case "partlycloudy":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-cloud'></i>";
 					break;
 				case "partlysunny":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-day-cloudy'></i>";
 					break;
 				case "rain":
 					iconHtml = "<i class='wi wi-day-rain'></i>";
@@ -191,10 +186,10 @@
 					iconHtml = "<i class='wi wi-day-sleet'></i>";
 					break;
 				case "snow":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-snow'></i>";
 					break;
 				case "sunny":
-					iconHtml = "<i class=''></i>";
+					iconHtml = "<i class='wi wi-day-sunny'></i>";
 					break;
 				case "thunderstorm":
 					iconHtml = "<i class='wi wi-day-thunderstorm'></i>";
@@ -203,8 +198,8 @@
 					iconHtml = "<i class='fa fa-question'></i>";
 					break;
 				default:
-					default code block
-			}*/
+					iconHtml = "<i class='fa fa-question'></i>";
+			}
 			
 			return iconHtml;
 		}
